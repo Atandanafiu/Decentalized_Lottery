@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\ASUS\\Project_Web3.0\\Decentralized_Lottery\\contracts\\Raffle.sol": {
-      "lastModificationDate": 1655841828877,
-      "contentHash": "3f439fed65693d166da22f01e7f54a08",
+      "lastModificationDate": 1655856598344,
+      "contentHash": "d611dc73dc3937d4c4f5521aa1a6dc79",
       "sourceName": "contracts/Raffle.sol",
       "solcConfig": {
         "version": "0.8.8",
@@ -30,7 +30,8 @@
       },
       "imports": [
         "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol",
-        "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol"
+        "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol",
+        "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol"
       ],
       "versionPragmas": [
         "^0.8.0"
@@ -107,6 +108,41 @@
       ],
       "artifacts": [
         "VRFConsumerBaseV2"
+      ]
+    },
+    "C:\\Users\\ASUS\\Project_Web3.0\\Decentralized_Lottery\\node_modules\\@chainlink\\contracts\\src\\v0.8\\interfaces\\KeeperCompatibleInterface.sol": {
+      "lastModificationDate": 1655745385944,
+      "contentHash": "bdbf3e274e50272d9c830fa414fcbec9",
+      "sourceName": "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol",
+      "solcConfig": {
+        "version": "0.8.8",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "KeeperCompatibleInterface"
       ]
     }
   }

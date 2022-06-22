@@ -7,7 +7,15 @@ pragma solidity ^0.8.0;
 error Raffle_notEnoughEther();
 error Raffle_TransferFailed();
 error RaffleState_notOpen();
+error Raffle_UpkeepNotNeeded(uint currentBalnace, uint numPlayers, uint raffeState);
 
+
+/**
+* @title Decentralized__Lottery
+* @author Atanda Nafiu
+* @dev This smart contract uses Chainlink VRF and Chainlink Keepers
+* @notice A decentralized smart contract
+ */
 contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     /**Type Declaration */
     enum RaffleState {OPEN, CALCULATING}
@@ -27,7 +35,6 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     RaffleState private s_raffleState;
     uint private immutable i_interval;
     uint private s_lastTimeStamp;
-    
 
     /**Event */
     event RaffleEnter(address indexed player);
@@ -43,7 +50,6 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         s_raffleState = RaffleState.OPEN;
         i_interval = interval;
         s_lastTimeStamp = block.timestamp;
-
     }
 
     function enterRaffle() public payable {
@@ -57,8 +63,17 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         emit RaffleEnter(msg.sender);
     }
 
-    function requestRandomWords() external {
+    function performUpkeep(bytes calldata /**performData */) external override {
+        (bool upkeepNeeded, ) = checkUpkeep("");
+        // require(upkeepNeeded, "Upkeep not needed");
+        if (!upkeepNeeded) {
+            revert Raffle_UpkeepNotNeeded(
 
+                address(this).balance,
+                s_players.length,
+                uint256(s_raffleState)
+            );
+        }
         s_raffleState = RaffleState.CALCULATING; 
         uint requestId = i_vrfCoordinator.requestRandomWords(
         i_gasLane,
@@ -74,7 +89,8 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         address payable recentWinner = s_players[indexOfWinner];
         s_recentWinner = recentWinner;
         s_raffleState = RaffleState.OPEN;
-        s_raffleState = new address payable[](0);
+        s_players = new address  payable[](0);
+        s_lastTimeStamp = block.timestamp;
        (bool success, ) = recentWinner.call{value: address(this).balance}("");
         if (!success) {
             revert Raffle_TransferFailed();
@@ -91,12 +107,17 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
     * 3> The subcription should be funded with LINK
     * 4> The lottery should be in an open state 
      */
-    function checkUpkeep(bytes calldata /**checkData */) external override returns (bool upKeepNeeded, bytes memory){
-        bool isOpen = (RaffleState == s_raffleState);
-        bool timeStamp = ((block.timeStamp - s_lastTimeStamp) > i_interval);
-        bool hasPlayers= (s_players.length > 0);
-        bool hasBalanc = address(this).balance > 0
-        upkeepNeeded = (timeStamp && isOpen && hasBalanc && hasPlayers)
+    
+    function checkUpkeep(bytes memory /**checkData */) 
+        public override returns 
+    (
+        bool upkeepNeeded, bytes memory /**performData */
+    ){
+        bool isOpen = RaffleState.OPEN == s_raffleState;
+         bool timePassed = ((block.timestamp - s_lastTimeStamp) > i_interval);
+        bool hasPlayers= s_players.length > 0;
+        bool hasBalanc = address(this).balance > 0;
+        upkeepNeeded = timePassed && isOpen && hasBalanc && hasPlayers;
     }
 
     /**view/ pure function */
@@ -110,6 +131,26 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
     function getRecentWiner() public view returns(address){
         return s_recentWinner;
+    }
+
+    function getRaffleState() public view returns(RaffleState){
+        return s_raffleState;
+    }
+
+    function getNumWords() public pure returns(uint) {
+        return NUMWORDS;
+    }
+
+    function getNumberOfPlayers() public view returns(uint) {
+        return s_players.length;
+    }
+
+    function getTimeStamp () public view returns(uint){
+        return s_lastTimeStamp;
+    }
+
+    function getRequestConfirmation() public pure returns(uint){
+        return REQUEST_CONFIRMATION;
     }
 
 }
