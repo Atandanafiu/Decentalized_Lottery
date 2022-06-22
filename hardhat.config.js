@@ -25,7 +25,7 @@ module.exports = {
     rinkeby: {
       chainId: 4,
       blockConfirmation: 6,
-      url: RINKEBY_RPC_URL,
+      url: "https://eth-rinkeby.alchemyapi.io/v2/ti0GNqWTZ7qSJYOzXWnEaXJOwdPPLCQj",
       accounts: [PRIVATE_KEY],
 
     }
