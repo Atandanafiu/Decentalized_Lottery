@@ -1,10 +1,10 @@
 require("@nomiclabs/hardhat-waffle")
 require("@nomiclabs/hardhat-etherscan")
-// require("hardhat-deploy")
-// require("solidity-coverage")
-// require("hardhat-gas-reporter")
-// require("hardhat-contract-sizer")
-// require("dotenv").config()
+require("hardhat-deploy")
+require("solidity-coverage")
+require("hardhat-gas-reporter")
+require("hardhat-contract-sizer")
+require("dotenv").config()
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -29,6 +29,12 @@ module.exports = {
       accounts: [PRIVATE_KEY],
 
     }
+  },
+  gasReporter: {
+    enabled: false,
+    currecy: "USD",
+    outputFile: "gas-report.txt",
+    noColors: true,
   },
   solidity: "0.8.8",
   namedAccounts: {

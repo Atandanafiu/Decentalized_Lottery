@@ -19,6 +19,11 @@
   "dependencies": {
     "@chainlink/contracts": "^0.4.1",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",
-    "hardhat-shorthand": "^1.0.0"
+    "dotenv": "^16.0.1",
+    "hardhat-contract-sizer": "^2.5.1",
+    "hardhat-deploy": "^0.11.10",
+    "hardhat-gas-reporter": "^1.0.8",
+    "hardhat-shorthand": "^1.0.0",
+    "solidity-coverage": "^0.7.21"
   }
 }
