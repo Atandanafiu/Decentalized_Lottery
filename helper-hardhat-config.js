@@ -8,6 +8,7 @@ const networkConfig = {
         sucriptionId: "0",
         callbackGasLimit: "500000",
         interval: "30",
+        enttraceFee: ethers.utils.parseEther("0.01")
     },
     31337: {
         name: "hardhat",

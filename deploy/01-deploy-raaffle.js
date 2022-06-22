@@ -1,8 +1,10 @@
 const { network, ethers } = require("hardhat")
-const {developmentChain, networkConfig} = require("../helper-hardhat.config")
-const {verify} = require("../helper-hardhat.config")
+const {developmentChains, networkConfig} = require("../helper-hardhat-config")
+const { verify } = require("../utils/verify")
 
-const VRF_FUND_SUB_ID = ethers.utils.parseEther(0.003)
+const decimals = 18;
+const input = "0.01"; // Note: this is a string, e.g. user input
+const VRF_FUND_SUB_ID = ethers.utils.parseUnits(input, decimals)
 
 module.exports = async function ({getNamedAccounts, deployments}) {
     const {deploy, log} =  deployments
@@ -11,7 +13,7 @@ module.exports = async function ({getNamedAccounts, deployments}) {
 
     let vrfCoordinatorV2Address, subcriptionId
 
-    if (developmentChain.includes(network.name)) {
+    if (developmentChains.includes(network.name)) {
         const vrfCoordinatorV2Mock = await ethers.getContractAt("VRFCoordinatorV2Mock")
         vrfCoordinatorV2Address = vrfCoordinatorV2Mock.address
         const transactionResponse = await vrfCoordinatorV2Mock.createSubcription()

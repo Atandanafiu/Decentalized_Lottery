@@ -129,7 +129,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         return s_players[index];
     }
 
-    function getRecentWiner() public view returns(address){
+    function getRecentWinner() public view returns(address){
         return s_recentWinner;
     }
 
@@ -155,6 +155,10 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
     function getInterval() public view returns(uint) {
         return i_interval;
+    }
+
+    function getLatestTimeStamp() public view returns(uint) {
+        return s_lastTimeStamp;
     }
 
 }
