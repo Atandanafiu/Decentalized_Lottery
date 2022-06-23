@@ -7,6 +7,7 @@ const networkConfig = {
         gasLane: "0xd89b2bf150e3b9e13446986e571fb9cab24b13cea0a43ea20a6049a85cc807cc",
         sucriptionId: "0",
         callbackGasLimit: "500000",
+        subcriptionId: "7003",
         interval: "30",
         enttraceFee: ethers.utils.parseEther("0.01")
     },

@@ -2,9 +2,7 @@ const { network, ethers } = require("hardhat")
 const {developmentChains, networkConfig} = require("../helper-hardhat-config")
 const { verify } = require("../utils/verify")
 
-const decimals = 18;
-const input = "0.01"; // Note: this is a string, e.g. user input
-const VRF_FUND_SUB_ID = ethers.utils.parseUnits(input, decimals)
+const VRF_FUND_SUB_ID = "1000000000000000000000"
 
 module.exports = async function ({getNamedAccounts, deployments}) {
     const {deploy, log} =  deployments

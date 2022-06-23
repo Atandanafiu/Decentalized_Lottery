@@ -20,6 +20,7 @@
     "@chainlink/contracts": "^0.4.1",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",
     "dotenv": "^16.0.1",
+    "ethereum-unit-converter": "^0.0.17",
     "hardhat-contract-sizer": "^2.5.1",
     "hardhat-deploy": "^0.11.10",
     "hardhat-gas-reporter": "^1.0.8",
